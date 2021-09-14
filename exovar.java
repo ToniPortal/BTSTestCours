@@ -4,9 +4,9 @@ public class exovar {
 
 //Exercice 1
 
-int ageboite = 90;
+int ageboite = -1;
 
-if(ageboite >= 18 || ageboite <= 0){
+if(ageboite >= 18 || ageboite >= 0){
 
 System.out.println("Vous pouvez renter dans la boîte");
 
@@ -19,7 +19,7 @@ System.out.println("Vous pouvez renter dans la boîte");
 
 // Exercice 2
 
-int menumcdo = 0;
+int menumcdo = 1;
 
 System.out.println("Vous avez choisi le menu : " + menumcdo);
 

@@ -21,4 +21,4 @@ jobs:
         java: [ '8', '15' ]
     name: Java ${{ matrix.Java }} sample
     steps:
-      - run: java -cp java exovar
+      - run: java exovar

@@ -1,34 +1,21 @@
 package Java;
 
-import java.util.*;
-
 public class exoboucle {
-
     public static void main(String[] args) {
 
-        Scanner monScanner = new Scanner(System.in);
-
-        int age = monScanner.nextInt();
-
-int arrive = 0;
-
-int agemax = 100;
-
-        while (age < agemax) { // condition
-            age++;
-            arrive++;
+        int[] monTableauDEntiers = new int[1000];
+        int boucle = 0;
+        while (boucle < 1000) {
+            monTableauDEntiers[boucle] = boucle + 1;
+            boucle++;
         }
+        int somme = 0;
+        for (int monCompteur = 1; monCompteur <= monTableauDEntiers.length; monCompteur = monCompteur + 1) {
 
-        if(age > agemax){
-
-            System.out.println("Vous êtes au dessue de l'âge max");
-
-        } else if(age <= agemax) {
-
-        System.out.println("Il vous manque " + arrive + " ans pour arriver a :" + agemax + "ans");
+            somme = somme + monTableauDEntiers[monCompteur - 1];
 
         }
-        
+        System.out.println(somme);
 
     }
 

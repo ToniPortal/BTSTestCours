@@ -70,6 +70,8 @@ public class bingo {
 
         }
 
+        MonScanneur.close();
+
     }
 
 }

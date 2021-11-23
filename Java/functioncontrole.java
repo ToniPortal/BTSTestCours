@@ -1,7 +1,7 @@
 
 import java.util.Scanner;
 
-public class controle {
+public class functioncontrole {
 
     public static void main(String[] args) {
         Scanner MonScanneur = new Scanner(System.in); // Scanneur pour interagir avec l'utulisateur
@@ -31,26 +31,25 @@ public class controle {
                     + "\nQuelle est votre annonce ?");
             int annoncej1 = MonScanneur.nextInt(); // Demander au joueurs 1 son score(il peut mentir donc zéro
                                                    // vérification)
-            System.out.println("->" + annoncej1);
 
             int bouclepj2 = 0; // 2ième boucle pour les 5 dés du j2
             while (bouclepj2 < 5) { // alimenter j2
                 j2[bouclepj2] = min + (int) (Math.random() * ((max - min) + min));
                 bouclepj2++;
             }
-            String resultatj2 = j2[0] + " " + j2[1] + " " + j2[2] + " " + j2[3] + " " + j2[4]; // les nombre sortie
+            resultatj2(j2); // les nombre sortie
 
-            System.out.println("Joueur 2 : voici votre jeu " + resultatj2 + "\nQuelle est votre annonce ?");
+            System.out.println();
             System.out.println("Que répondez-vous ? je fais : PAREIL, MIEUX, MOINS BIEN");
             String eviterPbNextLine = MonScanneur.nextLine(); // permet d'utiliser un nextLine près un nextInt
             String annoncej2 = MonScanneur.nextLine();// Demander a l'utulisateur si il a fait PAREIL, MIEUX, MOINS BIEN
-            System.out.println("->" + annoncej2);
 
-            int totalj1 = j1[0] + j1[1] + j1[2] + j1[3] + j1[4]; // La somme total des dés du j1
-            int totalj2 = j2[0] + j2[1] + j2[2] + j2[3] + j2[4]; // La somme total des dés du j2
+            int totalj1 = somme(j1); // La somme total des dés du j1
+            int totalj2 = somme(j2); // La somme total des dés du j2
 
-            System.out.println("Résultats\nJoueur 1 : " + resultatj1 + "= " + totalj1 + "\nJoueur 2 : " + resultatj2
-                    + "= " + totalj2);
+            System.out
+                    .println("Résultats\nJoueur 1 : " + resultatj1 + "= " + totalj1);
+            resultatj2(j2); // les nombre sortie j2
 
             // Qui a fait mieux ?
             int scoreajout = 0; // Combien va ton ajouter au score ?
@@ -98,11 +97,10 @@ public class controle {
                 j2[bouclepj2] = min + (int) (Math.random() * ((max - min) + min));
                 bouclepj2++;
             }
-            resultatj2 = j2[0] + " " + j2[1] + " " + j2[2] + " " + j2[3] + " " + j2[4]; // les nombre sortie mais Tour 2
 
             numerodutour++;
-            System.out.println("Tour " + numerodutour + ":\nJoueur 2 : voici votre jeu " + resultatj2
-                    + "\nQuelle est votre annonce ?");
+            System.out.println("Tour " + numerodutour + ":\n");
+            resultatj2(j2); // les nombre sortie mais Tour 2
             int annoncej2t2 = MonScanneur.nextInt();// Demander au joueurs 2 score(il peut mentir donc zéro
                                                     // vérification)
             System.out.println("->" + annoncej2t2);
@@ -120,11 +118,12 @@ public class controle {
             String annoncej1t2 = MonScanneur.nextLine();// Demander si il a fait PAREIL, MIEUX, MOINS BIEN
             System.out.println("->" + annoncej1t2);
 
-            totalj1 = j1[0] + j1[1] + j1[2] + j1[3] + j1[4]; // La somme total des dés du j1 tour2
-            totalj2 = j2[0] + j2[1] + j2[2] + j2[3] + j2[4]; // La somme total des dés du j2 tour2
+            totalj1 = somme(j1); // La somme total des dés du j1 tour2
+            totalj2 = somme(j2); // La somme total des dés du j2 tour2
 
-            System.out.println("Résultats\nJoueur 2 : " + resultatj2 + " = " + totalj2 + "\nJoueur 1 : " + resultatj1
-                    + " = " + totalj1); // résultat t2
+            System.out.println("Résultats\nJoueur 2 :  = " + totalj2 + "\nJoueur 1 : " + resultatj1 + " = " + totalj1); // résultat
+                                                                                                                        // t2
+            resultatj2(j2); // les nombre sortie mais Tour 2
 
             // Qui a fait mieux ?
             scoreajout = 0; // Combien va ton ajouter au score ?
@@ -190,5 +189,36 @@ public class controle {
         }
         MonScanneur.close();
 
+    }
+
+    public static int somme(int[] tab) {
+
+        int chiffretotal = 0;
+        int boucle = 0;
+        while (boucle < tab.length) {
+
+            chiffretotal = maFonctionAddition(tab[boucle], chiffretotal);
+            boucle++;
+
+        }
+
+        return chiffretotal;
+
+    }
+
+    public static int maFonctionAddition(int unEntier, int unDeuxiemeEntier) {
+
+        return (unEntier + unDeuxiemeEntier);
+
+    }
+
+    public static void resultatj2(int[] j2) {
+        String resultatj2 = j2[0] + " " + j2[1] + " " + j2[2] + " " + j2[3] + " " + j2[4];
+        System.out.println("Joueur 2 : " + resultatj2);
+    }
+
+    public static void resultatj1(int[] j1) {
+        String resultatj1 = j1[0] + " " + j1[1] + " " + j1[2] + " " + j1[3] + " " + j1[4];
+        System.out.println("Joueur 1 : " + resultatj1);
     }
 }

@@ -26,4 +26,8 @@ public class list {
             System.out.println(language.get(i));
         }
     }
+
+    public int indexOf(String string) {
+        return 0;
+    }
 }

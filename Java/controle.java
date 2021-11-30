@@ -1,4 +1,5 @@
 
+/*
 import java.util.Scanner;
 
 public class controle {
@@ -42,7 +43,7 @@ public class controle {
 
             System.out.println("Joueur 2 : voici votre jeu " + resultatj2 + "\nQuelle est votre annonce ?");
             System.out.println("Que répondez-vous ? je fais : PAREIL, MIEUX, MOINS BIEN");
-            String eviterPbNextLine = MonScanneur.nextLine(); // permet d'utiliser un nextLine près un nextInt
+            MonScanneur.nextLine();
             String annoncej2 = MonScanneur.nextLine();// Demander a l'utulisateur si il a fait PAREIL, MIEUX, MOINS BIEN
             System.out.println("->" + annoncej2);
 
@@ -116,7 +117,7 @@ public class controle {
 
             System.out.println("Joueur 1 : voici votre jeu " + resultatj1);
             System.out.println("Que répondez-vous ? je fais : PAREIL, MIEUX, MOINS BIEN");
-            eviterPbNextLine = MonScanneur.nextLine(); // Cette ligne permet d'utiliser un nextLine près un nextInt
+            MonScanneur.nextLine();
             String annoncej1t2 = MonScanneur.nextLine();// Demander si il a fait PAREIL, MIEUX, MOINS BIEN
             System.out.println("->" + annoncej1t2);
 
@@ -192,3 +193,4 @@ public class controle {
 
     }
 }
+*/

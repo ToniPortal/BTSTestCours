@@ -29,9 +29,6 @@ public class functioncontrole {
             String resultatj1 = j1[0] + " " + j1[1] + " " + j1[2] + " " + j1[3] + " " + j1[4];
             System.out.println("Tour " + numerodutour + ":\nJoueur 1 : voici votre jeu " + resultatj1
                     + "\nQuelle est votre annonce ?");
-            int annoncej1 = MonScanneur.nextInt(); // Demander au joueurs 1 son score(il peut mentir donc zéro
-                                                   // vérification)
-
             int bouclepj2 = 0; // 2ième boucle pour les 5 dés du j2
             while (bouclepj2 < 5) { // alimenter j2
                 j2[bouclepj2] = min + (int) (Math.random() * ((max - min) + min));
@@ -41,7 +38,7 @@ public class functioncontrole {
 
             System.out.println();
             System.out.println("Que répondez-vous ? je fais : PAREIL, MIEUX, MOINS BIEN");
-            String eviterPbNextLine = MonScanneur.nextLine(); // permet d'utiliser un nextLine près un nextInt
+            MonScanneur.nextLine();
             String annoncej2 = MonScanneur.nextLine();// Demander a l'utulisateur si il a fait PAREIL, MIEUX, MOINS BIEN
 
             int totalj1 = somme(j1); // La somme total des dés du j1
@@ -114,7 +111,7 @@ public class functioncontrole {
 
             System.out.println("Joueur 1 : voici votre jeu " + resultatj1);
             System.out.println("Que répondez-vous ? je fais : PAREIL, MIEUX, MOINS BIEN");
-            eviterPbNextLine = MonScanneur.nextLine(); // Cette ligne permet d'utiliser un nextLine près un nextInt
+            MonScanneur.nextLine();
             String annoncej1t2 = MonScanneur.nextLine();// Demander si il a fait PAREIL, MIEUX, MOINS BIEN
             System.out.println("->" + annoncej1t2);
 

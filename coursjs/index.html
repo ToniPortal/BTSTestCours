@@ -1,0 +1,88 @@
+<html>
+
+<head>
+    <title>PASTRE TONI</title>
+
+    <script>
+        //Tp javascript simple
+        function test() {
+
+            // Les chaines
+            console.log("JavaScript est facile.")
+            console.log("JavaScript c'est facile.")
+            console.log(`C'est Lao Tseu qui a dit : "L'échec est le fondement de la réussite".`)
+            console.log(`Afficher un \\ n'est pas si évident.`)
+            console.log("Ceci est la première ligne\nCeci est la deuxième ligne")
+
+            //Les nombres
+            //exo 0 :
+            let operation1 = 28 + 6
+
+            console.log(`Résultat exo0: ${operation1}`)
+
+            //exo 1 :
+            let operation2 = (6 * 4 + 2) / 2
+
+            console.log(`Résultat exo1: ${operation2}`)
+
+            //exo 2 :
+            let addressetotal = 1337 + 256
+
+            let coutenvoielettre = addressetotal * 2
+
+            console.log(`Résultat exo2: ${coutenvoielettre}`)
+
+            //exo 3 :
+            let coutavectotue = (addressetotal * 1.50) + 500
+
+            let budgetfinal = 3000 - coutavectotue
+
+            console.log(`Il devrai payer: ${coutavectotue}\nça rentre dans son budget`)
+
+            let campamarket = (1000 + (2350 * 0.12))
+
+            console.log(`Bénifice exo3: ${campamarket}`)
+
+
+            // Les variables
+            
+            //Chassez le bogue ! 0
+            var nomParc = "Le Royaume Magique";
+            console.log("Bienvenue au parc d'attractions " + nomParc);
+
+            //Chassez le bogue ! 1
+            let clientsHier = 359;
+            let clientsAujourdhui = 374;
+            let totalClients = clientsHier + clientsAujourdhui;
+            console.log(totalClients);
+
+            //Chassez le bogue ! 2
+            let nombreDeCases = 64;
+            let Case = 2;
+            let superficie = nombreDeCases * Case;
+            console.log("Superficie du plateau : " + superficie + "m2");
+
+            //Chassez le bogue ! 3
+            let h = 13;
+            let m = 37;
+            let separateur = "h";
+            let horaire = h + separateur + m;
+            console.log("Bienvenue, il est " + horaire);
+
+
+
+        }
+    </script>
+
+</head>
+
+
+<body>
+
+    <button onclick="test()">Coucou</button>
+
+</body>
+
+
+
+</html>

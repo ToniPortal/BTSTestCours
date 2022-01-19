@@ -1,8 +1,6 @@
-package Java;
-
 import java.util.Scanner;
 
-public class controle {
+public class PASTRE {
 
     public static void main(String[] args) {
         Scanner MonScanneur = new Scanner(System.in); // Scanneur pour interagir avec l'utulisateur

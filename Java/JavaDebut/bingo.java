@@ -1,4 +1,4 @@
-
+package JavaDebut;
 import java.util.Scanner;
 
 public class bingo {

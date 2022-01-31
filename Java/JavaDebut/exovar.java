@@ -1,3 +1,5 @@
+package JavaDebut;
+
 public class exovar {
 
     public static void main(String[] args) {

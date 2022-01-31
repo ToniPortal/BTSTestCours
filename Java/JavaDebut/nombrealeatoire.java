@@ -1,3 +1,5 @@
+package JavaDebut;
+
 import java.util.*;
 
 public class nombrealeatoire {

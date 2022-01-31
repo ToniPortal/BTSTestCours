@@ -1,3 +1,4 @@
+package JavaDebut;
 
 public class exoboucle {
     public static void main(String[] args) {

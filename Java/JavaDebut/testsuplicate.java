@@ -1,3 +1,4 @@
+package JavaDebut;
 
 public class testsuplicate {
 

@@ -1,3 +1,5 @@
+package JavaDebut;
+
 public class Voiture {
 
     private String couleur;

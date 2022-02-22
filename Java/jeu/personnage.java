@@ -23,11 +23,10 @@ public class personnage {
 
     private String pseudo;
 
+    public String classe;
+
     public personnage() {
         nomtableaurandom();
-
-        System.out.println(pseudo);
-
         posX();
         posY();
         force();
@@ -35,14 +34,43 @@ public class personnage {
         agi();
         inte();
 
-        tour();
+        switch (random(1, 4)) {
+            case 1:
+                this.classe = "magiciens";
+                magiciens M1 = new magiciens();
+                break;
+            case 2:
+
+                break;
+            case 3:
+
+                break;
+            case 4:
+
+                break;
+
+        }
     }
 
-    private void tour() {
+    private String message;
+
+    public String toString() {
+
+        this.message = this.message + "\nPseudo: " + getpseudo() + "\nposX: " + getposX() + "\nposY: " + getposY()
+                + "\nForce: " + getforce() + "\nEndu: " + getendu() + "\nAgi: " + getagi() + "\nInt: " + getinte() + "\n";
+
+        return this.message;
+
+    }
+
+  
+    String direction = "NULL";
+    
+    public void tour() {
 
         int choixdirect = random(1, 4);
-
-        String direction = "NULL";
+     
+        
         switch (choixdirect) {
 
             case 1:
@@ -66,7 +94,8 @@ public class personnage {
                 break;
 
         }
-        System.out.println(direction);
+
+        toString();
 
     }
 
@@ -102,12 +131,22 @@ public class personnage {
 
     }
 
+    public int getposY() {
+
+        return this.posY;
+
+    }
+
     private void posY() {
         this.posY = random(0, 100);
     }
 
     private void force() {
         this.force = random(0, 99);
+    }
+
+    private int getforce() {
+        return this.force;
     }
 
     public void setaddforce(int i) {
@@ -118,12 +157,20 @@ public class personnage {
         this.endu = random(0, 99);
     }
 
+    private int getendu() {
+        return this.endu;
+    }
+
     public void setaddendu(int i) {
         this.endu = this.endu + i;
     }
 
     private void agi() {
         this.agi = random(0, 99);
+    }
+
+    private int getagi() {
+        return this.agi;
     }
 
     public void setaddagi(int i) {
@@ -134,11 +181,15 @@ public class personnage {
         this.inte = random(0, 99);
     }
 
-    public void setaddinte(int i){
+    private int getinte() {
+        return this.inte;
+    }
+
+    public void setaddinte(int i) {
         this.inte = this.inte + i;
     }
 
-    private void setposaddX(int i) {
+    public void setposaddX(int i) {
 
         if ((this.posX = posX + i) > 100) {
             this.posX = 0;
@@ -148,7 +199,7 @@ public class personnage {
         }
     }
 
-    private void setposmoinX(int i) {
+    public void setposmoinX(int i) {
         if ((this.posX = posX - i) < 0) {
             this.posX = 100;
             System.out.println("remit a 100");
@@ -157,7 +208,7 @@ public class personnage {
         }
     }
 
-    private void setposaddY(int i) {
+    public void setposaddY(int i) {
         if ((this.posY = posY + i) > 100) {
             this.posY = 0;
             System.out.println("remit a 0");
@@ -166,7 +217,7 @@ public class personnage {
         }
     }
 
-    private void setposmoinY(int i) {
+    public void setposmoinY(int i) {
         if ((this.posY = posY - i) < 0) {
             this.posY = 100;
             System.out.println("remit a 100");
@@ -191,7 +242,7 @@ public class personnage {
         return this.pseudo;
     }
 
-    private int random(int min, int max) {
+    public int random(int min, int max) {
         return (min + (int) (Math.random() * ((max - min) + min)));
     }
 

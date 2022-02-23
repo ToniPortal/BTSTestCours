@@ -1,0 +1,52 @@
+<html>
+
+<head>
+    <title>PASTRE TONI</title>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+
+    <script>
+         function test() {
+
+            //http://hubeau.eaufrance.fr/api/v1/temperature/chronique?code_station=01004000&date_debut_mesure=2009-07-1&date_fin_mesure=2010-01-01&sort=desc
+
+            var page =
+                "https://mighty-tor-59983.herokuapp.com/http://hubeau.eaufrance.fr/api/v1/temperature/chronique?code_station=01004000&date_debut_mesure=2009-07-1&date_fin_mesure=2010-01-01&sort=desc"
+
+/*
+            const result = await fetch(page)
+                .then(response => response.json())
+                .then(response => console.log(response))
+                .catch(error => alert("Erreur : " + error));
+*/
+
+            async function fetchMoviesBadStatus() {
+                const response = await fetch(page);
+                if (!response.ok) {
+                    const message = `An error has occured: ${response.status}`;
+                    throw new Error(message);
+                }
+                const movies = await response.json();
+                return movies;
+            }
+
+            fetchMoviesBadStatus().then(error => {
+                console.log(error);
+            });
+
+        }
+    </script>
+
+</head>
+
+
+<body>
+
+    <button onclick="test()">Coucou</button>
+
+</body>
+
+
+
+</html>

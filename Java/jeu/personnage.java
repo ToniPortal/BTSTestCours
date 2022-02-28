@@ -18,14 +18,55 @@ public class personnage {
             "Quadran", "Quatre", "Ralf", "Riri", "Roar", "Robot", "Rock", "Rolex", "Roméo", "Saxo", "Sentinel", "Seven",
             "Silver", "Skip", "Snoopy", "Soleil", "Spock", "Sushi", "Syrius", "Tails", "Taxi", "Teckel", "Teken",
             "Tictac", "Titeuf", "Tom", "Topia", "Twix", "Ulys", "Uranus", "Uther", "Vans", "Vent", "Vicking", "Vinci",
-            "Vodka", "Wanek", "Waterloo", "Wishy", "Wolf", "Xenon", "Yan", "Yang", "Yannick", "Ying", "Yoga", "Youki",
+            "Vodka", "Wanek", "Waterloo", "Wishy", "Wolf", "Xenon", "Yan", "Yang", "Yannick", "Ying", "Yoga", "Yuki",
             "Zebra", "Zébulon", "Zen", "Zéphyr", "Zeus", "Zone", "Zorro" };
 
     private String pseudo;
 
-    public String classe;
+    private magiciens classMagicien;
+
+    public magiciens getClassMagicien() {
+
+        return classMagicien;
+
+    }
+
+    private orgre classOrgre;
+
+    public orgre getClassOrgre() {
+        return classOrgre;
+    }
+
+    private nains classNains;
+
+    public nains getClassNains() {
+        return classNains;
+    }
+
+    private arabe classarabe;
+
+    public arabe getClassArabe() {
+        return classarabe;
+    }
+
+    public int quelclass;
+
+    public int getClasse() {
+        return quelclass;
+    }
+
+    private int chiffrevivant = 0;
+
+    public int getvivantoupas() {
+        return chiffrevivant;
+    }
+
+    public void setmort() {
+        this.chiffrevivant = 1;
+    }
 
     public personnage() {
+
         nomtableaurandom();
         posX();
         posY();
@@ -36,41 +77,45 @@ public class personnage {
 
         switch (random(1, 4)) {
             case 1:
-                this.classe = "magiciens";
+                this.quelclass = 1;
                 magiciens M1 = new magiciens();
+                this.classMagicien = M1;
                 break;
             case 2:
-
+                this.quelclass = 2;
+                orgre O1 = new orgre();
+                this.classOrgre = O1;
                 break;
             case 3:
-
+                this.quelclass = 3;
+                nains N1 = new nains();
+                this.classNains = N1;
                 break;
             case 4:
 
                 break;
 
         }
+
     }
 
     private String message;
 
     public String toString() {
 
-        this.message = this.message + "\nPseudo: " + getpseudo() + "\nposX: " + getposX() + "\nposY: " + getposY()
-                + "\nForce: " + getforce() + "\nEndu: " + getendu() + "\nAgi: " + getagi() + "\nInt: " + getinte() + "\n";
+        this.message = "\nPseudo: " + getpseudo() + "\nposX: " + getposX() + " posY: " + getposY()
+                + "\nForce: " + getforce() + " Endu: " + getendu() + " Agi: " + getagi() + " Int: " + getinte() + "\n";
 
         return this.message;
 
     }
 
-  
     String direction = "NULL";
-    
-    public void tour() {
+
+    public void deplacement() {
 
         int choixdirect = random(1, 4);
-     
-        
+
         switch (choixdirect) {
 
             case 1:
@@ -94,8 +139,6 @@ public class personnage {
                 break;
 
         }
-
-        toString();
 
     }
 
@@ -145,7 +188,7 @@ public class personnage {
         this.force = random(0, 99);
     }
 
-    private int getforce() {
+    public int getforce() {
         return this.force;
     }
 
@@ -153,11 +196,15 @@ public class personnage {
         this.force = this.force + i;
     }
 
+    public void setmultiforce(int i) {
+        this.force = this.force * i;
+    }
+
     private void endu() {
         this.endu = random(0, 99);
     }
 
-    private int getendu() {
+    public int getendu() {
         return this.endu;
     }
 
@@ -165,11 +212,15 @@ public class personnage {
         this.endu = this.endu + i;
     }
 
+    public void setmultiendu(int i) {
+        this.endu = this.endu * i;
+    }
+
     private void agi() {
         this.agi = random(0, 99);
     }
 
-    private int getagi() {
+    public int getagi() {
         return this.agi;
     }
 
@@ -177,11 +228,15 @@ public class personnage {
         this.agi = this.agi + i;
     }
 
+    public void setmultiagi(int i) {
+        this.agi = this.agi * i;
+    }
+
     private void inte() {
         this.inte = random(0, 99);
     }
 
-    private int getinte() {
+    public int getinte() {
         return this.inte;
     }
 
@@ -189,11 +244,15 @@ public class personnage {
         this.inte = this.inte + i;
     }
 
+    public void setmultiinte(int i) {
+        this.inte = this.inte * i;
+    }
+
     public void setposaddX(int i) {
 
         if ((this.posX = posX + i) > 100) {
             this.posX = 0;
-            System.out.println("remit a 0");
+
         } else {
             this.posX = posX + i;
         }
@@ -202,7 +261,7 @@ public class personnage {
     public void setposmoinX(int i) {
         if ((this.posX = posX - i) < 0) {
             this.posX = 100;
-            System.out.println("remit a 100");
+
         } else {
             this.posX = posX - i;
         }
@@ -211,7 +270,7 @@ public class personnage {
     public void setposaddY(int i) {
         if ((this.posY = posY + i) > 100) {
             this.posY = 0;
-            System.out.println("remit a 0");
+
         } else {
             this.posY = posY + i;
         }
@@ -220,7 +279,7 @@ public class personnage {
     public void setposmoinY(int i) {
         if ((this.posY = posY - i) < 0) {
             this.posY = 100;
-            System.out.println("remit a 100");
+
         } else {
             this.posY = posY - i;
         }

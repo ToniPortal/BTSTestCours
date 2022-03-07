@@ -4,6 +4,9 @@ public class magiciens extends personnage {
 
     public void specia() {
 
+        System.out.println(super.getpseudo() + " est un magicien et quitte le combat");
+
+
         switch (random(1, 4)) {
             case 1:
                 super.setposaddX(random(1, 99));

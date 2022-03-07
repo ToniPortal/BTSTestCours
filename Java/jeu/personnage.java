@@ -21,6 +21,9 @@ public class personnage {
             "Vodka", "Wanek", "Waterloo", "Wishy", "Wolf", "Xenon", "Yan", "Yang", "Yannick", "Ying", "Yoga", "Yuki",
             "Zebra", "Zébulon", "Zen", "Zéphyr", "Zeus", "Zone", "Zorro" };
 
+            
+
+
     private String pseudo;
 
     private magiciens classMagicien;
@@ -43,9 +46,9 @@ public class personnage {
         return classNains;
     }
 
-    private arabe classarabe;
+    private voleur classarabe;
 
-    public arabe getClassArabe() {
+    public voleur getClassVoleur() {
         return classarabe;
     }
 
@@ -55,15 +58,17 @@ public class personnage {
         return quelclass;
     }
 
-    private int chiffrevivant = 0;
-
-    public int getvivantoupas() {
-        return chiffrevivant;
+    public boolean getvivantoupas() {
+        return this.estvivant;
     }
+
+    private boolean estvivant = true;
 
     public void setmort() {
-        this.chiffrevivant = 1;
+        this.estvivant = false;
     }
+
+
 
     public personnage() {
 

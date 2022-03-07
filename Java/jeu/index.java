@@ -10,9 +10,9 @@ public class index {
 
     public static void main(String[] args) {
 
-        int[] toutestat = new int[99];
+        int[] toutestat = new int[100];
         ArrayList<personnage> al = new ArrayList<>();
-        for (int i = 0; i <= 98; i++) {
+        for (int i = 0; i < 100; i++) {
 
             personnage P1 = new personnage();
             toutestat[i] = P1.toutestat();
@@ -20,23 +20,190 @@ public class index {
             al.add(P1);
             System.out.println(P1.toString());
         }
-        int boucle = 0;
 
-        while (boucle == 0) {
-            System.out.println(getmort());
-            if (getmort() == 99) {
-                boucle = 1;
+        int nbjoueurenvie = 100;
+        // -------------------------------------------------------------
 
-                for (int i = 0; i <= al.size() - 1; i++) {
-                    if (al.get(i).getvivantoupas() == 0) {
-                        System.out.println("WINNER IS: " + al.get(i).getpseudo());
+int nborgre =0;
+int activationorgre =0;
+
+int activationnains = 0;
+int nbnains = 0;
+
+int activationvoleur = 0;
+int nbvoleur = 0;
+
+int ancienjoueur = 0;
+        while (nbjoueurenvie >= 1) {
+        for (int u = 0; u < 100; u++) {
+
+            al.get(u).deplacement();
+
+
+        for (int p = 0; p < al.size(); p++) {
+
+            al.get(p).deplacement();
+
+            if(activationorgre == 1){
+                nborgre++;
+                if(nborgre == 1){
+                        (al.get(ancienjoueur).getClassOrgre()).specia();   
+                }
+                if(nborgre == 5){
+                    activationorgre = 0;
+                }
+                            }
+
+                            if(activationnains == 1){
+                                nbnains++;
+                                if(nbnains == 1){
+                                        (al.get(ancienjoueur).getClassNains()).specia();   
+                                }
+                                if(nbnains == 7){
+                                    activationnains = 0;
+                                }
+                                            }
+
+                                            if(activationvoleur == 1){
+                                                nbvoleur++;
+                                                if(nbvoleur == 1){
+                                                        (al.get(ancienjoueur).getClassVoleur()).specia();   
+                                                }
+                                                if(nbvoleur == 4){
+                                                    activationvoleur = 0;
+                                                }
+                                                            }
+
+            if (al.get(u) != al.get(p)) {
+
+                if (al.get(p).getvivantoupas() == true && al.get(u).getvivantoupas() == true) {
+
+                    if (al.get(u).getposY() == al.get(p).getposY()
+                            && al.get(u).getposX() == al.get(p).getposX()) {
+
+
+
+                        if (al.get(u).cordocombat() > al.get(u).cordocombat()) {
+
+                            if(al.get(p).getClasse() == 4){
+                                if(activationvoleur == 0){
+                                    activationvoleur =1;
+                                    ancienjoueur = p;
+                                    }
+                            }
+
+if(al.get(p).getClasse() == 3){
+    if(activationnains == 0){
+        activationnains =1;
+        ancienjoueur = p;
+        }
+}
+
+                            if(al.get(p).getClasse() == 2){
+                            if(activationorgre == 0){
+                                activationorgre =1;
+                                ancienjoueur = p;
+                                }
+                            }
+if(al.get(p).getClasse() == 1){
+
+al.get(p).getClassMagicien().specia();
+
+}else {
+
+                            System.out.println(al.get(u).getpseudo() + " a gagné contre " + al.get(p).getpseudo());
+
+                            al.get(p).setmort();
+
+                            nbjoueurenvie = nbjoueurenvie - 1;
+
+                            System.out.println("Plus que " + nbjoueurenvie + " joueurs en vie !");
+
+                            //Ici c'est U qui gg
+                            switch(random(1, 4)){
+                                case 1:
+                            al.get(u).setaddforce(3);
+                                break;
+                                case 2:
+                                al.get(u).setaddendu(3);
+                                break;
+                                case 3:
+                                al.get(u).setaddagi(3);
+                                break;
+                                case 4:
+                                al.get(u).setaddinte(3);
+                                break;
+                            }
+                        } //else magiciens
+                        }else {
+
+                            if(al.get(p).getClasse() == 4){
+                                if(activationvoleur == 0){
+                                    activationvoleur =1;
+                                    ancienjoueur = u;
+                                    }
+                            }
+
+                            if(al.get(p).getClasse() == 3){
+                                if(activationnains == 0){
+                                    activationnains =1;
+                                    ancienjoueur = u;
+                                    }
+                            }
+                            if(al.get(p).getClasse() == 2){
+                                if(activationorgre == 0){
+                                    activationorgre =1;
+                                    ancienjoueur = u;
+                                    }
+                                }
+
+                            System.out.println(al.get(p).getpseudo() + " a gagné contre " + al.get(u).getpseudo());
+
+                            al.get(u).setmort();
+
+                            nbjoueurenvie = nbjoueurenvie - 1;
+
+                            System.out.println("Plus que " + nbjoueurenvie + " joueurs en vie !");
+
+                            //Ici c'est P qui gg
+                            switch(random(1, 4)){
+                                case 1:
+                            al.get(p).setaddforce(3);
+                                break;
+                                case 2:
+                                al.get(p).setaddendu(3);
+                                break;
+                                case 3:
+                                al.get(p).setaddagi(3);
+                                break;
+                                case 4:
+                                al.get(p).setaddinte(3);
+                                break;
+                            }
+
+                        }
                     }
                 }
-
-            } else {
-                start(al, toutestat);
             }
         }
+
+    }
+    if(nbjoueurenvie == 1){
+    for (int g = 0; g < al.size(); g++) {
+
+        if (al.get(g).getvivantoupas() == true) {
+
+            System.out.println(al.get(g).toString());
+nbjoueurenvie--;
+g = al.size();
+        }
+
+    }
+    }
+
+
+}
+
 
         int maxNum = toutestat[0];
 
@@ -58,140 +225,18 @@ public class index {
         System.out.println("Maximum number = " + maxNum + "\nGG facile:" + quiestcefinal);
 
     } // Public static de lancement
+    
 
-    private static int gensmort = 0;
-
-    public static void gensmortfunc() {
-        index.gensmort = index.gensmort + 1;
-    }
-
-    public static int getmort() {
-        return gensmort;
-    }
-
-    public static void start(ArrayList<personnage> al, int[] toutestat) {
-
-        int tourautoriseorgre = 0;
-        int tourorgre = 0;
-
-        int tourautorisenains = 0;
-        int tournains = 0;
-
-        int tourautorisevoleur = 0;
-        int tourvoleur = 0;
-
-        for (int i = 0; i <= al.size() - 2; i++) { // Parcourir la liste
-
-            al.get(i).deplacement(); // deplacement des personnage
-
-            if (tourautoriseorgre == 2) {
-                tourautoriseorgre--;
-                (al.get(i - 1).getClassOrgre()).specia();
-            } else if (tourautoriseorgre == 1) {
-                if (tourorgre == 5) {
-
-                } else {
-                    tourorgre++;
-                }
-            }
-
-            if (tourautorisenains == 2) {
-                tourautorisenains--;
-                (al.get(i - 1).getClassNains()).specia();
-            } else if (tourautorisenains == 1) {
-                if (tournains == 7) {
-
-                } else {
-                    tournains++;
-                }
-            }
-
-            if (tourautorisevoleur == 2) {
-                tourautorisevoleur--;
-                (al.get(i - 1).getClassArabe()).specia();
-            } else if (tourautorisevoleur == 1) {
-                if (tourvoleur == 4) {
-
-                } else {
-                    tourvoleur++;
-                }
-            }
-
-            // Même cordonée donc combat
-            if (al.get(i).getposX() == al.get(i + 1).getposX() && al.get(i).getposY() == al.get(i + 1).getposY()) {
-
-                System.out.println(al.get(i).getpseudo() + " VS " + al.get(i + 1).getpseudo());
-
-                if ((al.get(i).cordocombat() - al.get(i + 1).cordocombat()) < 0) { // Verif combat
-                    if (al.get(i).getClasse() == 2) {
-                        // Ogre
-                        if (tourorgre == 5) {
-                            tourautoriseorgre = 2;
-                            tourorgre = 0;
-                            System.out.println("L'orgre a ajouté 20 de force au prochain tour !");
-                        }
-                    } else if (al.get(i).getClasse() == 3) {
-                        // Nains
-                        if (tourorgre == 7) {
-                            tourautorisenains = 2;
-                            tournains = 0;
-                            System.out.println("Le nains a ajouté 100 d'agi et d'endu au prochain tour !");
-                        }
-                    } else if (al.get(i).getClasse() == 4) {
-                        // voleur
-                        if (tourvoleur == 4) {
-                            tourautorisevoleur = 2;
-                            tourvoleur = 0;
-                            System.out.println(
-                                    "Le voleur va prendre une des compétence des autre 'race' mais ce sera pénalisé de 15%");
-                        }
-
-                    }
-                    if (al.get(i).getClasse() == 1) {
-                        // Magicien
-                        (al.get(i).getClassMagicien()).specia();
-                        System.out.println("Le Magicien a éviter le combat !!");
-                    } else {
-                        System.out.println("GG a: " + al.get(i + 1).getpseudo());
-                        switch (random(1, 4)) {
-                            case 1:
-                                (al.get(i + 1)).setaddforce(3);
-                                break;
-                            case 2:
-                                (al.get(i + 1)).setaddendu(3);
-                                break;
-                            case 3:
-                                (al.get(i + 1)).setaddagi(3);
-                                break;
-                            case 4:
-                                (al.get(i + 1)).setaddinte(3);
-                                break;
-                        }
-                        al.get(i).setmort();
-                        gensmortfunc();
-                    }
-                } else {
-                    System.out.println("GG a: " + al.get(i).getpseudo());
-                    switch (random(1, 4)) {
-                        case 1:
-                            (al.get(i)).setaddforce(3);
-                            break;
-                        case 2:
-                            (al.get(i)).setaddendu(3);
-                            break;
-                        case 3:
-                            (al.get(i)).setaddagi(3);
-                            break;
-                        case 4:
-                            (al.get(i)).setaddinte(3);
-                            break;
-                    }
-                    al.get(i).setmort();
-                    gensmortfunc();
-                }
+    public static void voirvivantoupas(ArrayList<personnage> unelistedeperso) {
+        for(personnage encours : unelistedeperso){
+            if(encours.getvivantoupas() == true){
+                System.out.print("\nGG: "+encours.getpseudo()+"\n"); 
             }
 
         }
+        
     }
+
+
 
 };

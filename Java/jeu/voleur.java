@@ -1,6 +1,6 @@
 package jeu;
 
-public class arabe extends personnage {
+public class voleur extends personnage {
 
     public void specia() {
 
@@ -18,7 +18,7 @@ public class arabe extends personnage {
                 classenains.specia();
                 break;
             case 4:
-                arabe classearabe = new arabe();
+                voleur classearabe = new voleur();
                 classearabe.specia();
                 break;
         }

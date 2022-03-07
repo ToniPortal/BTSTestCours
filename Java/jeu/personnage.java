@@ -97,7 +97,8 @@ public class personnage {
                 this.classNains = N1;
                 break;
             case 4:
-
+  
+            this.quelclass = 4;
                 break;
 
         }

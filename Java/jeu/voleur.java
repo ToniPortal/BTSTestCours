@@ -4,6 +4,11 @@ public class voleur extends personnage {
 
     public void specia() {
 
+super.setmultiagi((int) 0.15);
+super.setmultiendu((int) 0.15);
+super.setmultiforce((int) 0.15);
+super.setmultiinte((int) 0.15);
+
         switch (random(1, 4)) {
             case 1:
                 magiciens classemag = new magiciens();

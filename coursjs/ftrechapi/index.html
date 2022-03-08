@@ -2,8 +2,6 @@
   <head>
     <script>
       async function Login() {
-        var tag = await document.createElement("p");
-        document.body.appendChild(tag);
         let myHeaders = new Headers();
         let body = {
           username: "peguy",
@@ -26,9 +24,29 @@
         element.removeAttribute("disabled");
       }
 
+      function formatDate(date) {
+        return date;
+      }
+
+      function update() {
+        const element = document.getElementById("inputupdate").value;
+        const textforupdate = document.querySelector("#textupdate");
+        const requestOptions = {
+          method: "PUT",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ "categorie": "Test" }),
+          Authorization: "Bearer " + jwt,
+          "Content-Type": "application/json",
+        };
+        fetch(`https://kuz.iotalink.fr/catalogue/produit/${element}/_update`, requestOptions)
+          .then((response) => response.json())
+          .then((data) => (textforupdate.innerHTML = data));
+          
+      }
+
       function get(jwt) {
         myHeaders2 = new Headers({
-          Authorization: "Bearer " + jwt,
+          Authorization: "Bearer " + get(localStorage.getItem('jwt')),
           "Content-Type": "application/json",
         });
         fetch("https://kuz.iotalink.fr/catalogue/produit", {
@@ -37,9 +55,33 @@
         })
           .then((response) => response.json())
           .then((result) => {
-            console.log(result.result.hits[0]);
+            var count = Object.keys(result.result.hits).length;
+            for (i = 0; i <= count - 1; i++) {
+              console.log(result.result.hits[i]);
 
-            for (i = 0; i <= result.result.hits.lenght; i++) {}
+              var br = document.createElement("br");
+              document.body.appendChild(br);
+              var para = document.createElement("p");
+
+              if (result.result.hits[i]._source.categorie == undefined) {
+                result.result.hits[i]._source.categorie = "Non définie";
+              }
+
+              const node = document.createTextNode(
+                `ID: ${JSON.stringify(
+                  result.result.hits[i]._id
+                )}  Categorie: ${JSON.stringify(
+                  result.result.hits[i]._source.categorie
+                )}  NomSource: ${JSON.stringify(
+                  result.result.hits[i]._source.name
+                )} : ${formatDate(
+                  JSON.stringify(
+                    result.result.hits[i]._source._kuzzle_info.createdAt
+                  )
+                )}`
+              );
+              document.body.appendChild(node);
+            }
           })
           .catch((error) => {
             console.error(error);
@@ -58,5 +100,12 @@
     >
       GetInfo
     </button>
+
+    <button onclick="update()">Update</button>
+
+    <input id="inputupdate" name="Test"> </input>
+
+<p id="textupdate">Text for update</p>
+
   </body>
 </html>

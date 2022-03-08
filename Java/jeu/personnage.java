@@ -21,15 +21,14 @@ public class personnage {
             "Vodka", "Wanek", "Waterloo", "Wishy", "Wolf", "Xenon", "Yan", "Yang", "Yannick", "Ying", "Yoga", "Yuki",
             "Zebra", "Zébulon", "Zen", "Zéphyr", "Zeus", "Zone", "Zorro" };
 
-            
-
-
     private String pseudo;
 
     private magiciens classMagicien;
 
     public magiciens getClassMagicien() {
-
+        if (this.classMagicien == null) {
+            this.classMagicien = new magiciens();
+        }
         return classMagicien;
 
     }
@@ -37,19 +36,28 @@ public class personnage {
     private orgre classOrgre;
 
     public orgre getClassOrgre() {
+        if (this.classOrgre == null) {
+            this.classOrgre = new orgre();
+        }
         return classOrgre;
     }
 
     private nains classNains;
 
     public nains getClassNains() {
+        if (this.classNains == null) {
+            this.classNains = new nains();
+        }
         return classNains;
     }
 
-    private voleur classarabe;
+    private voleur classVoleur;
 
     public voleur getClassVoleur() {
-        return classarabe;
+        if (this.classVoleur == null) {
+            this.classVoleur = new voleur();
+        }
+        return classVoleur;
     }
 
     public int quelclass;
@@ -68,8 +76,6 @@ public class personnage {
         this.estvivant = false;
     }
 
-
-
     public personnage() {
 
         nomtableaurandom();
@@ -83,22 +89,19 @@ public class personnage {
         switch (random(1, 4)) {
             case 1:
                 this.quelclass = 1;
-                magiciens M1 = new magiciens();
-                this.classMagicien = M1;
                 break;
             case 2:
                 this.quelclass = 2;
-                orgre O1 = new orgre();
-                this.classOrgre = O1;
                 break;
             case 3:
                 this.quelclass = 3;
-                nains N1 = new nains();
-                this.classNains = N1;
                 break;
+
             case 4:
-  
-            this.quelclass = 4;
+                this.quelclass = 4;
+                break;
+            default:
+                System.out.println("Error");
                 break;
 
         }
@@ -109,8 +112,31 @@ public class personnage {
 
     public String toString() {
 
+String classechsoie = null;
+
+        switch (getClasse()) {
+            case 1:
+            classechsoie = "Magicien";
+                break;
+            case 2:
+            classechsoie = "Orgre";
+                break;
+            case 3:
+            classechsoie = "Nains";
+                break;
+
+            case 4:
+            classechsoie = "Voleur";
+                break;
+            default:
+                System.out.println("Error");
+                break;
+
+        }
+
         this.message = "\nPseudo: " + getpseudo() + "\nposX: " + getposX() + " posY: " + getposY()
-                + "\nForce: " + getforce() + " Endu: " + getendu() + " Agi: " + getagi() + " Int: " + getinte() + "\n";
+                + "\nForce: " + getforce() + " Endu: " + getendu() + " Agi: " + getagi() + " Int: " + getinte() + "\nClasse:"
+                + classechsoie +"\n";
 
         return this.message;
 
@@ -256,7 +282,7 @@ public class personnage {
 
     public void setposaddX(int i) {
 
-        if ((this.posX = posX + i) > 100) {
+        if ((this.posX + i) > 100) {
             this.posX = 0;
 
         } else {
@@ -265,7 +291,7 @@ public class personnage {
     }
 
     public void setposmoinX(int i) {
-        if ((this.posX = posX - i) < 0) {
+        if ((this.posX - i) < 0) {
             this.posX = 100;
 
         } else {
@@ -274,7 +300,7 @@ public class personnage {
     }
 
     public void setposaddY(int i) {
-        if ((this.posY = posY + i) > 100) {
+        if ((this.posY + i) > 100) {
             this.posY = 0;
 
         } else {
@@ -283,9 +309,8 @@ public class personnage {
     }
 
     public void setposmoinY(int i) {
-        if ((this.posY = posY - i) < 0) {
+        if ((this.posY - i) < 0) {
             this.posY = 100;
-
         } else {
             this.posY = posY - i;
         }

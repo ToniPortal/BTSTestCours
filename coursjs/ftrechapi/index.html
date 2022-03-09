@@ -1,111 +1,141 @@
 <html>
   <head>
-    <script>
-      async function Login() {
-        let myHeaders = new Headers();
-        let body = {
-          username: "peguy",
-          password: "peguy",
-        };
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>WebApp</title>
 
-        myHeaders.append("Content-Type", "application/json");
-        const response = await fetch("https://kuz.iotalink.fr/_login/local/", {
-          method: "POST",
-          headers: myHeaders,
-          body: JSON.stringify(body),
-        });
-        let res = await response.json();
-        console.log(res);
-
-        var jwt = await res.result.jwt;
-        console.log(jwt);
-        localStorage.setItem("jwt", jwt);
-        var element = document.getElementById("getid");
-        element.removeAttribute("disabled");
-      }
-
-      function formatDate(date) {
-        return date;
-      }
-
-      function update() {
-        const element = document.getElementById("inputupdate").value;
-        const textforupdate = document.querySelector("#textupdate");
-        const requestOptions = {
-          method: "PUT",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ "categorie": "Test" }),
-          Authorization: "Bearer " + jwt,
-          "Content-Type": "application/json",
-        };
-        fetch(`https://kuz.iotalink.fr/catalogue/produit/${element}/_update`, requestOptions)
-          .then((response) => response.json())
-          .then((data) => (textforupdate.innerHTML = data));
-          
-      }
-
-      function get(jwt) {
-        myHeaders2 = new Headers({
-          Authorization: "Bearer " + get(localStorage.getItem('jwt')),
-          "Content-Type": "application/json",
-        });
-        fetch("https://kuz.iotalink.fr/catalogue/produit", {
-          headers: myHeaders2,
-          method: "GET",
-        })
-          .then((response) => response.json())
-          .then((result) => {
-            var count = Object.keys(result.result.hits).length;
-            for (i = 0; i <= count - 1; i++) {
-              console.log(result.result.hits[i]);
-
-              var br = document.createElement("br");
-              document.body.appendChild(br);
-              var para = document.createElement("p");
-
-              if (result.result.hits[i]._source.categorie == undefined) {
-                result.result.hits[i]._source.categorie = "Non définie";
-              }
-
-              const node = document.createTextNode(
-                `ID: ${JSON.stringify(
-                  result.result.hits[i]._id
-                )}  Categorie: ${JSON.stringify(
-                  result.result.hits[i]._source.categorie
-                )}  NomSource: ${JSON.stringify(
-                  result.result.hits[i]._source.name
-                )} : ${formatDate(
-                  JSON.stringify(
-                    result.result.hits[i]._source._kuzzle_info.createdAt
-                  )
-                )}`
-              );
-              document.body.appendChild(node);
-            }
-          })
-          .catch((error) => {
-            console.error(error);
-          });
-      }
-    </script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css" integrity="sha384-PsH8R72JQ3SOdhVi3uxftmaW6Vc51MKb0q5P2rRUpPvrszuE4W1povHYgTpBfshb" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js" integrity="sha384-vFJXuSJphROIrBnz7yo7oB41mKfc8JzQZiCq4NCceLEaO4IHwicKwpJf9c9IpFgh" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js" integrity="sha384-alpBpkh1PFOepccYVYDB4do5UnbKysX5WZXm3XxPqe5iKTfUKjNkCk9SaVuEZflJ" crossorigin="anonymous"></script>
+    <script type="text/javascript" src="js.js"></script>
+    
   </head>
 
   <body>
-    <button onclick="Login()">Login</button>
+<div id="Logindiv">
 
-    <button
-      id="getid"
-      disabled="disabled"
-      onclick="get(localStorage.getItem('jwt'))"
-    >
-      GetInfo
-    </button>
+<div class="card" style="width: 20rem;">
+  <div class="card-body">
+      <h4 class="card-title"><label>Login <span class="badge badge-secondary">NEW</span></label></h4>
+      <p class="card-text">Le button ajoutera en bas tout ce que vous avez fait dans le formulaire.</p>
+      <button type="button" id="submit" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
+          Submit
+      </button>
+      <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+          <div class="modal-dialog" role="document">
+              <div class="modal-content">
+                  <div class="modal-header">
+                      <h5 class="modal-title" id="exampleModalLabel">Envoyer ?</h5>
+                      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                          <span aria-hidden="true">&times;</span>
+                      </button>
+                  </div>
+                  <div class="modal-body">
+                    <form class="row g-3">
+                      <div class="col-auto">
+                        <label for="staticEmail2" class="visually-hidden">Username</label>
+                        <input id="usernameinput" value="peguy" type="text" class="form-control">
+                      </div>
+                      <div class="col-auto">
+                        <label for="inputPassword2" class="visually-hidden">Password</label>
+                        <input id="passwordinput" value="peguy" type="password" class="form-control" placeholder="Password">
+                      </div>
+                    </form>
+                      
+                      <br>
 
-    <button onclick="update()">Update</button>
+                  </div>
+                  <div class="modal-footer">
+                      <button type="button" class="btn btn-secondary" data-dismiss="modal">Fermer</button>
+                      <button id="btnlogin" class="btn btn-primary" onclick="hide()" data-dismiss="modal">Login</button>
+                  </div>
+              </div>
+          </div>
+      </div>
+      <br />
+      <p class="text-danger">
+          <span class="sr-only">Danger: </span>
+          Cette action est reversible avec F5
+      </p>
+  </div>
+</div>
 
-    <input id="inputupdate" name="Test"> </input>
+</div>
 
-<p id="textupdate">Text for update</p>
+<br />
+
+<div id="hide" style="display: none;">
+
+
+  <button
+  id="getid"
+    disabled="disabled"
+    onclick="get(localStorage.getItem('jwt'))"
+  >
+    GetInfo
+  </button>
+
+
+
+<br>
+<br>
+<button onclick="update(localStorage.getItem('jwt'))">Update</button>
+  <input id="inputupdate">Name de l'update</input>
+<br>
+  <input id="jsoninputupdate" >JSON UPDATE</input>
+  <br>
+  <br>
+  <button onclick="create(localStorage.getItem('jwt'))">Create</button>
+  <input id="inputcreate">Name du create</input>
+  <br>
+      <input id="jsoninputcreate" >JSON CREATE</input>
+<br>
+<br>
+<button id="btndelte" onclick="Delete(localStorage.getItem('jwt'))">DELETE</button>
+<input id="inputdelete" >Nom du delete</input>
+
+<p id="textupdate">Info Text</p>
+
+<button onclick="clear()">Clear Token(BEARER)</button>
+
+
+<br />
+
+
+
+<div class="card">
+  <div class="card-body">
+      <p class="card-text">Ceci est une barre de chargement.</p>
+
+      <div class="progress">
+          <div id="progressbar" class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width: 0%"></div>
+      </div>
+  </div>
+</div>
+
+<div class="card">
+  <div class="card-body">
+
+      <table class="table">
+          <caption>NbProduit <span id="profil" class="badge badge-light">0</span></caption>
+          <thead>
+              <tr>
+                  <th scope="col">#</th>
+                  <th scope="col">Produit</th>
+                  <th scope="col">Prix</th>
+                  <th scope="col">Categorie</th>
+
+              </tr>
+          </thead>
+          <tbody id="userlist">
+
+          </tbody>
+      </table>
+  </div>
+</div>
+
+</div>
 
   </body>
 </html>

@@ -1,8 +1,6 @@
 
 
 function hide() {
-
-
     const usernameinput = document.getElementById("usernameinput").value;
     const passwordinput = document.getElementById("passwordinput").value;
 
@@ -18,7 +16,6 @@ function hide() {
     } else {
         alert("Mauvais password")
     }
-
 
 }
 
@@ -117,33 +114,19 @@ async function Delete(jwt) {
     } else {
 
     }
-
-    /*
-
-*/
-
 }
-
-
 
 function update(jwt) {
     const element = document.getElementById("inputupdate").value;
     const textforupdate = document.querySelector("#textupdate");
-    var jsoninputupdate = document.getElementById("jsoninputupdate").value;
-
-    if (jsoninputupdate == "") {
-        document.getElementById("jsoninputupdate").value = '{"categorie": "TEST"}';
-        jsoninputupdate = document.getElementById("jsoninputupdate").value;
-    }
-
-    console.log(jsoninputupdate)
+console.log($('#categ-select :selected').text())
     const requestOptions = {
         method: 'PUT',
         headers: {
             'Content-Type': 'application/json',
             'Authorization': 'Bearer ' + jwt
         },
-        body: JSON.stringify(jsoninputupdate),
+        body: JSON.stringify({"categorie":`${$('#categ-select :selected').text()}`,"name":`${element}`,"price":50 }),
     };
     fetch(`https://kuz.iotalink.fr/catalogue/produit/${element}/_update`, requestOptions)
         .then(async response => {
@@ -159,7 +142,6 @@ function update(jwt) {
 
             textforupdate.innerHTML = `Action: ${data.action} Modif de ${data.result._id}`;
             document.getElementById("inputupdate").value = "";
-            document.getElementById("jsoninputupdate").value = "";
             console.log(data)
         })
         .catch(error => {
@@ -187,6 +169,7 @@ function get(jwt) {
     })
         .then((response) => response.json())
         .then((result) => {
+            console.log(result)
             var count = Object.keys(result.result.hits).length;
             for (i = 0; i <= count - 1; i++) {
 
@@ -203,7 +186,7 @@ function get(jwt) {
                         result.result.hits[i]._id
                     ) + "</td>" +
                     "<td>" + JSON.stringify(
-                        result.result.hits[i]._source.prix
+                        result.result.hits[i]._source.price
                     ) + "</td>" +
                     "<td>" + JSON.stringify(
                         result.result.hits[i]._source.categorie

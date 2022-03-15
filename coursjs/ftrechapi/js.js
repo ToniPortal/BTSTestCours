@@ -176,8 +176,8 @@ function get(jwt) {
                 if (result.result.hits[i]._source.categorie == undefined) {
                     result.result.hits[i]._source.categorie = "Non définie";
                 }
-                if (result.result.hits[i]._source.prix == undefined) {
-                    result.result.hits[i]._source.prix = "Non définie";
+                if (result.result.hits[i]._source.price == undefined) {
+                    result.result.hits[i]._source.price = "Non définie";
                 }
 
                 $('#userlist').append("<tr>" +

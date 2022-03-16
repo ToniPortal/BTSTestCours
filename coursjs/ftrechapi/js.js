@@ -13,6 +13,7 @@ function hide() {
         document.getElementById("Logindiv").style.display = "none";
 
         Login()
+        get(localStorage.getItem('jwt'))
     } else {
         alert("Mauvais password")
     }
@@ -30,6 +31,7 @@ function enableBtn(idbtn) {
 }
 
 async function Login() {
+
     let myHeaders = new Headers();
     const usernameinput = document.getElementById("usernameinput").value;
     const passwordinput = document.getElementById("passwordinput").value;
@@ -51,7 +53,6 @@ async function Login() {
     var jwt = await res.result.jwt;
     console.log(jwt);
     localStorage.setItem("jwt", jwt);
-    var element = document.getElementById("getid");
     enableBtn("getid")
     disableBtn("btnlogin")
 }
@@ -73,6 +74,8 @@ function makeid(length) {
 
 async function create(jwt) {
     const elemente = document.getElementById("inputcreate").value;
+    const inputcreateprix = document.getElementById("inputcreateprix").value;
+    const identifiantinput = document.getElementById("identifiantinput").value;
     const textforupdate = document.querySelector("#textupdate");
 
     const rawResponse = await fetch(`https://kuz.iotalink.fr/catalogue/produit/${elemente}/_create`, {
@@ -82,13 +85,15 @@ async function create(jwt) {
             'Content-Type': 'application/json',
             'Authorization': 'Bearer ' + jwt
         },
-        body: JSON.stringify({ "categorie": `${makeid(10)}` })
+        body: JSON.stringify({ "categorie": `${$('#categ-create :selected').text()}`, "name": `${elemente}`, "price": `${inputcreateprix}`, "identifiant": `${identifiantinput}` })
     });
     const data = await rawResponse.json();
 
     console.log(data);
 
-    textforupdate.innerHTML = `Action: ${data.action} ; Modif de ${data.result._id}`;
+    setTimeout(reupdate, 700);
+
+    textforupdate.innerHTML = `Action: ${data.action} ; CREATE ${data.result._id}`;
 
 }
 
@@ -107,7 +112,9 @@ async function Delete(jwt) {
         });
         const data = await rawResponse.json();
 
-        console.log(data);
+        setTimeout(reupdate, 700);
+
+        //console.log(data);
 
         textforupdate.innerHTML = `Action: ${data.action} ; Delete ${data.result._id}`;
 
@@ -116,17 +123,23 @@ async function Delete(jwt) {
     }
 }
 
+function reupdate() {
+    console.log("reupdate")
+    get(localStorage.getItem('jwt'))
+}
+
+
 function update(jwt) {
     const element = document.getElementById("inputupdate").value;
+    const prixinput = document.getElementById("inputprix").value;
     const textforupdate = document.querySelector("#textupdate");
-console.log($('#categ-select :selected').text())
     const requestOptions = {
         method: 'PUT',
         headers: {
             'Content-Type': 'application/json',
             'Authorization': 'Bearer ' + jwt
         },
-        body: JSON.stringify({"categorie":`${$('#categ-select :selected').text()}`,"name":`${element}`,"price":50 }),
+        body: JSON.stringify({ "categorie": `${$('#categ-select :selected').text()}`, "name": `${element}`, "price": `${prixinput}` }),
     };
     fetch(`https://kuz.iotalink.fr/catalogue/produit/${element}/_update`, requestOptions)
         .then(async response => {
@@ -140,9 +153,14 @@ console.log($('#categ-select :selected').text())
                 return Promise.reject(error);
             }
 
+            setTimeout(reupdate, 700);
+
             textforupdate.innerHTML = `Action: ${data.action} Modif de ${data.result._id}`;
             document.getElementById("inputupdate").value = "";
+            document.getElementById("inputprix").value = "";
             console.log(data)
+
+
         })
         .catch(error => {
             textforupdate.innerHTML = `Error: ${error}`;
@@ -151,12 +169,30 @@ console.log($('#categ-select :selected').text())
 
 }
 
-var prof = 1;
+
+
+
+ function suppTr() {
+    var tr = document.querySelectorAll("#userlist tr");
+    console.log("TRLENGHT: " + tr.length)
+    if (tr.length != 0) {
+        for (i = 0; i < tr.length; i++) {
+            console.log(i)
+            tr[i].parentNode.removeChild(tr[i]);
+        }
+    }
+
+}
+
+
 
 var setProgressBar = "";
 
 
-function get(jwt) {
+async function get(jwt) {
+    suppTr()
+
+    var prof = 1;
     //+ get(localStorage.getItem('jwt')),
 
     myHeaders2 = new Headers({
@@ -171,6 +207,9 @@ function get(jwt) {
         .then((result) => {
             console.log(result)
             var count = Object.keys(result.result.hits).length;
+
+            
+
             for (i = 0; i <= count - 1; i++) {
 
                 if (result.result.hits[i]._source.categorie == undefined) {
@@ -179,18 +218,24 @@ function get(jwt) {
                 if (result.result.hits[i]._source.price == undefined) {
                     result.result.hits[i]._source.price = "Non définie";
                 }
+                if (result.result.hits[i]._source.identifiant == undefined) {
+                    result.result.hits[i]._source.identifiant = "Non définie";
+                }
 
                 $('#userlist').append("<tr>" +
                     "<th>" + prof + "</th>" +
-                    "<td>" + JSON.stringify(
-                        result.result.hits[i]._id
-                    ) + "</td>" +
-                    "<td>" + JSON.stringify(
-                        result.result.hits[i]._source.price
-                    ) + "</td>" +
-                    "<td>" + JSON.stringify(
-                        result.result.hits[i]._source.categorie
-                    ) + "</td>" +
+                    "<td>" +
+                    result.result.hits[i]._id
+                    + "</td>" +
+                    "<td>" +
+                    result.result.hits[i]._source.price
+                    + "</td>" +
+                    "<td>" +
+                    result.result.hits[i]._source.categorie
+                    + "</td>" +
+                    "<td>" +
+                    result.result.hits[i]._source.identifiant
+                    + "</td>" +
                     "</tr>");
 
                 $("#profil").html(prof);

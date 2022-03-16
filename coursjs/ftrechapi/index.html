@@ -68,37 +68,61 @@
 <div id="hide" style="display: none;">
 
 
-  <button
-  id="getid"
-    disabled="disabled"
-    onclick="get(localStorage.getItem('jwt'))"
-  >
-    GetInfo
-  </button>
-
-
+  <div class="card">
+    <div class="card-body">
+<div class="input-group flex-nowrap">
+  <span class="input-group-text" id="addon-wrapping">Produit</span>
+  <input type="text" class="form-control" placeholder="Produit" aria-label="Produit" aria-describedby="addon-wrapping" id="inputupdate">
+</div>
 
 <br>
-<br>
-<button onclick="update(localStorage.getItem('jwt'))">Update</button>
-  <input id="inputupdate">Produit</input>
-<br>
-<br>
+
+<div class="input-group mb-3">
+  <span class="input-group-text" id="inputGroup-sizing-default">Prix</span>
+  <input type="text" class="form-control" placeholder="Prix" aria-label="Prix" id="inputprix" aria-describedby="inputGroup-sizing-default">
+</div>
+
+
   <label for="categ-select">catégorie:</label>
-
-  <select name="categ" id="categ-select">
+  <select class="form-select" name="categ" id="categ-select">
       <option value="">--Please choose an option--</option>
       <option value="écran">écran</option>
       <option value="console">Console</option>
   </select>
+</div>
+</div>
+
   <br>
   <br>
-  <button onclick="create(localStorage.getItem('jwt'))">Create</button>
-  <input id="inputcreate">Name du create</input>
+
+  <button onclick="update(localStorage.getItem('jwt'))">Update</button>
+
   <br>
-      <input id="jsoninputcreate" >JSON CREATE</input>
+  <br>
+  <br>
+
+  <input id="identifiantinput">Identifiant</input>
+  <br>
+      <input id="inputcreate" >Produit</input>
 <br>
 <br>
+<input id="inputcreateprix" >Prix</input>
+<br>
+<br>
+<label for="categ-create">catégorie:</label>
+<select class="form-select" name="categ" id="categ-create">
+    <option value="">--Please choose an option--</option>
+    <option value="écran">écran</option>
+    <option value="console">Console</option>
+</select>
+<br>
+<br>
+
+<button onclick="create(localStorage.getItem('jwt'))">Create</button>
+
+<br>
+<br>
+
 <button id="btndelte" onclick="Delete(localStorage.getItem('jwt'))">DELETE</button>
 <input id="inputdelete" >Nom du delete</input>
 
@@ -107,31 +131,30 @@
 <button onclick="clear()">Clear Token(BEARER)</button>
 
 
-<br />
+<br>
+<br>
 
-
-
-<div class="card">
-  <div class="card-body">
-      <p class="card-text">Ceci est une barre de chargement.</p>
-
-      <div class="progress">
-          <div id="progressbar" class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width: 0%"></div>
-      </div>
-  </div>
-</div>
-
+<button
+id="getid" class="position-absolute start-50 translate-middle btn btn-primary"
+  disabled="disabled"
+  onclick="get(localStorage.getItem('jwt'))"
+>
+  GetInfo
+</button>
+<br>
+<br>
 <div class="card">
   <div class="card-body">
 
       <table class="table">
-          <caption>NbProduit <span id="profil" class="badge badge-light">0</span></caption>
+          <caption>NbProduit <span id="profil" class="badge text-dark">0</span></caption>
           <thead>
               <tr>
                   <th scope="col">#</th>
                   <th scope="col">Produit</th>
                   <th scope="col">Prix</th>
                   <th scope="col">Categorie</th>
+                  <th scope="col">Identifiant</th>
 
               </tr>
           </thead>

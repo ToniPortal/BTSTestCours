@@ -129,10 +129,14 @@ function reupdate() {
 }
 
 
+
+
 function update(jwt) {
+
     const element = document.getElementById("inputupdate").value;
     const prixinput = document.getElementById("inputprix").value;
     const textforupdate = document.querySelector("#textupdate");
+
     const requestOptions = {
         method: 'PUT',
         headers: {
@@ -141,6 +145,7 @@ function update(jwt) {
         },
         body: JSON.stringify({ "categorie": `${$('#categ-select :selected').text()}`, "name": `${element}`, "price": `${prixinput}` }),
     };
+
     fetch(`https://kuz.iotalink.fr/catalogue/produit/${element}/_update`, requestOptions)
         .then(async response => {
             const isJson = response.headers.get('content-type')?.includes('application/json');
@@ -210,7 +215,7 @@ async function get(jwt) {
 
             
 
-            for (i = 0; i <= count - 1; i++) {
+            for (i = 0; i < count; i++) {
 
                 if (result.result.hits[i]._source.categorie == undefined) {
                     result.result.hits[i]._source.categorie = "Non définie";

@@ -2,6 +2,11 @@ package jeu;
 
 public class magiciens extends personnage {
 
+    public class magicien{
+
+        
+    }
+
     public void specia() {
 
         System.out.println(super.getpseudo() + " est un magicien et quitte le combat");

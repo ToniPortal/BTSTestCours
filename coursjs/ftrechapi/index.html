@@ -9,10 +9,10 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js" integrity="sha384-vFJXuSJphROIrBnz7yo7oB41mKfc8JzQZiCq4NCceLEaO4IHwicKwpJf9c9IpFgh" crossorigin="anonymous"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js" integrity="sha384-alpBpkh1PFOepccYVYDB4do5UnbKysX5WZXm3XxPqe5iKTfUKjNkCk9SaVuEZflJ" crossorigin="anonymous"></script>
     <script type="text/javascript" src="js.js"></script>
-    
+
   </head>
 
-  <body>
+  <body onload="start()">
 <div id="Logindiv">
 
 <div class="card" style="width: 20rem;">
@@ -43,7 +43,7 @@
                       </div>
                     </form>
                       
-                      <br>
+                      
 
                   </div>
                   <div class="modal-footer">
@@ -66,8 +66,18 @@
 <br />
 
 <div id="hide" style="display: none;">
-
-
+  
+  <div class="btn-group" role="group" aria-label="Basic example">
+    <button id="updatebtnprinc" type="button" class="btn btn-primary">Update</button>
+    <button id="createbtnprinc" type="button" class="btn btn-primary">Create</button>
+    <button id="deletebtnprinc" type="button" class="btn btn-primary">Delete</button>
+    <button type="button" class="btn btn-primary" onclick="clear()">Clear Token(BEARER)</button>
+  </div>
+  
+    <br>
+    <br>
+    
+<div id="updatediv" style="display: none;">
   <div class="card">
     <div class="card-body">
 <div class="input-group flex-nowrap">
@@ -75,12 +85,13 @@
   <input type="text" class="form-control" placeholder="Produit" aria-label="Produit" aria-describedby="addon-wrapping" id="inputupdate">
 </div>
 
-<br>
+
 
 <div class="input-group mb-3">
   <span class="input-group-text" id="inputGroup-sizing-default">Prix</span>
   <input type="text" class="form-control" placeholder="Prix" aria-label="Prix" id="inputprix" aria-describedby="inputGroup-sizing-default">
 </div>
+
 
 
   <label for="categ-select">catégorie:</label>
@@ -90,49 +101,55 @@
       <option value="console">Console</option>
   </select>
 </div>
+<button onclick="update(localStorage.getItem('jwt'))">Update</button>
 </div>
 
-  <br>
-  <br>
 
-  <button onclick="update(localStorage.getItem('jwt'))">Update</button>
 
-  <br>
-  <br>
-  <br>
 
+
+</div>
+
+
+<div id="creatediv" style="display: none;">
+
+
+  <div class="card">
+    <div class="card-body">
   <input id="identifiantinput">Identifiant</input>
-  <br>
+  
       <input id="inputcreate" >Produit</input>
-<br>
-<br>
+
+
 <input id="inputcreateprix" >Prix</input>
-<br>
-<br>
+
+
 <label for="categ-create">catégorie:</label>
 <select class="form-select" name="categ" id="categ-create">
     <option value="">--Please choose an option--</option>
     <option value="écran">écran</option>
     <option value="console">Console</option>
 </select>
-<br>
-<br>
+
+
 
 <button onclick="create(localStorage.getItem('jwt'))">Create</button>
+</div>
+</div>
+</div>
 
-<br>
-<br>
+
+<div id="delete" style="display: none;">
 
 <button id="btndelte" onclick="Delete(localStorage.getItem('jwt'))">DELETE</button>
 <input id="inputdelete" >Nom du delete</input>
 
 <p id="textupdate">Info Text</p>
-
-<button onclick="clear()">Clear Token(BEARER)</button>
-
-
+</div>
 <br>
-<br>
+
+
+
 
 <button
 id="getid" class="position-absolute start-50 translate-middle btn btn-primary"
@@ -141,8 +158,11 @@ id="getid" class="position-absolute start-50 translate-middle btn btn-primary"
 >
   GetInfo
 </button>
+
 <br>
 <br>
+
+
 <div class="card">
   <div class="card-body">
 
@@ -155,11 +175,11 @@ id="getid" class="position-absolute start-50 translate-middle btn btn-primary"
                   <th scope="col">Prix</th>
                   <th scope="col">Categorie</th>
                   <th scope="col">Identifiant</th>
-
+                  <th scope="col">Modif</th>
               </tr>
           </thead>
           <tbody id="userlist">
-
+            
           </tbody>
       </table>
   </div>

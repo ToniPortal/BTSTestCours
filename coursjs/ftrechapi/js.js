@@ -1,3 +1,70 @@
+function start(){
+    const updatebtnprinc = document.getElementById('updatebtnprinc');
+    const createbtnprinc = document.getElementById('createbtnprinc');
+    const deletebtnprinc = document.getElementById('deletebtnprinc');
+    var updatediv = document.getElementById('updatediv');
+    var creatediv = document.getElementById('creatediv');
+    var deletediv = document.getElementById('delete');
+
+    updatebtnprinc.addEventListener('click', function (event) {
+
+        if(updatediv.style.visibility == 'visible'){
+
+        }else {
+            updatediv.style.display = null;
+            updatediv.style.visibility = 'visible';
+
+            creatediv.style.display = "none";
+            creatediv.style.visibility = null;
+    
+            deletediv.style.display = "none";
+            deletediv.style.visibility = null;
+        }
+        
+});
+
+
+createbtnprinc.addEventListener('click', function (event) {
+
+
+    if(creatediv.style.visibility == 'visible'){
+
+    }else {
+        creatediv.style.display = null;
+        creatediv.style.visibility = 'visible';
+
+        updatediv.style.display = "none";
+        updatediv.style.visibility = null;
+
+        deletediv.style.display = "none";
+        deletediv.style.visibility = null;
+
+    }
+
+});
+
+
+deletebtnprinc.addEventListener('click', function (event) {
+
+
+    if(deletediv.style.visibility == 'visible'){
+
+    }else {
+        deletediv.style.display = null;
+        deletediv.style.visibility = 'visible';
+
+        updatediv.style.display = "none";
+        updatediv.style.visibility = null;
+
+        creatediv.style.display = "none";
+        creatediv.style.visibility = null;
+    }
+
+});
+
+}
+
+
 
 
 function hide() {
@@ -129,8 +196,6 @@ function reupdate() {
 }
 
 
-
-
 function update(jwt) {
 
     const element = document.getElementById("inputupdate").value;
@@ -240,12 +305,12 @@ async function get(jwt) {
                     + "</td>" +
                     "<td>" +
                     result.result.hits[i]._source.identifiant
-                    + "</td>" +
+                    + `</td> <td><button onclick="updatebtn(${prof})" class="btn btn-primary">Update</button><button onclick="updatebtn(${prof})" class="btn btn-danger">Delete</button> </td>` +
                     "</tr>");
 
                 $("#profil").html(prof);
 
-                prof = prof + 1;
+                prof +=  1;
             }
         })
         .catch((error) => {
@@ -253,25 +318,13 @@ async function get(jwt) {
         });
 }
 
+function updatebtn(prof){
 
-
-function progress() {
-    var w = 0;
-    $("#submit").prop("disabled", true);
-    $("#body").css("background-color", "red");
-    setProgressBar = setInterval(function () {
-        w = w + 10;
-        $("#progressbar").css("width", w + "%");
-        if (w > 100) {
-            $("#submit").prop("disabled", false);
-            $("#body").css("background-color", "green");
-            a();
-            $("#progressbar").css("width", "0%");
-            stopInterval();
-        };
-    }, 500);
+    console.log(prof)
 
 }
+
+
 
 function stopInterval() {
     clearInterval(setProgressBar);
@@ -282,4 +335,7 @@ function stopInterval() {
 
 function clear() {
     localStorage.clear();
+    location.reload();
+return false;
+
 }

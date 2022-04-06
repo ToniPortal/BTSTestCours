@@ -8,6 +8,7 @@
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js" integrity="sha384-vFJXuSJphROIrBnz7yo7oB41mKfc8JzQZiCq4NCceLEaO4IHwicKwpJf9c9IpFgh" crossorigin="anonymous"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js" integrity="sha384-alpBpkh1PFOepccYVYDB4do5UnbKysX5WZXm3XxPqe5iKTfUKjNkCk9SaVuEZflJ" crossorigin="anonymous"></script>
+    <script src="	https://rawcdn.githack.com/nextapps-de/winbox/0.2.0/dist/winbox.bundle.js"></script>
     <script type="text/javascript" src="js.js"></script>
 
   </head>
@@ -101,7 +102,7 @@
       <option value="console">Console</option>
   </select>
 </div>
-<button onclick="update(localStorage.getItem('jwt'))">Update</button>
+<button onclick="update(localStorage.getItem('jwt'),0)">Update</button>
 </div>
 
 
@@ -126,7 +127,7 @@
 
 <label for="categ-create">catégorie:</label>
 <select class="form-select" name="categ" id="categ-create">
-    <option value="">--Please choose an option--</option>
+    <option value="">vide</option>
     <option value="écran">écran</option>
     <option value="console">Console</option>
 </select>
@@ -186,14 +187,5 @@ id="getid" class="position-absolute start-50 translate-middle btn btn-primary"
 </div>
 
 </div>
-<script>
-
-
-
-var test = "Test"
-
-console.log(`test: ${test}`)
-
-</script>
   </body>
 </html>

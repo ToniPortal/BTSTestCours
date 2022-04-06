@@ -145,14 +145,14 @@ async function create(jwt) {
     const identifiantinput = document.getElementById("identifiantinput").value;
     const textforupdate = document.querySelector("#textupdate");
 
-    const rawResponse = await fetch(`https://kuz.iotalink.fr/catalogue/produit/${elemente}/_create`, {
+    const rawResponse = await fetch(`https://kuz.iotalink.fr/catalogue/produit/${identifiantinput}/_create`, {
         method: 'POST',
         headers: {
             'Accept': 'application/json',
             'Content-Type': 'application/json',
             'Authorization': 'Bearer ' + jwt
         },
-        body: JSON.stringify({ "categorie": `${$('#categ-create :selected').text()}`, "name": `${elemente}`, "price": `${inputcreateprix}`, "identifiant": `${identifiantinput}` })
+        body: JSON.stringify({ "categorie": `${$('#categ-create :selected').text()}`, "name": `${elemente}`, "price": `${Number(inputcreateprix)}` })
     });
     const data = await rawResponse.json();
 
@@ -160,47 +160,62 @@ async function create(jwt) {
 
     setTimeout(reupdate, 700);
 
-    textforupdate.innerHTML = `Action: ${data.action} ; CREATE ${data.result._id}`;
 
 }
 
-async function Delete(jwt) {
-    const inputdelete = document.getElementById("inputdelete").value;
+
+async function Delete(jwt,inputdelete) {
+    
+    console.log("inputdelete:" + inputdelete)
+    if(inputdelete == ""){
+        inputdelete = document.getElementById("inputdelete").value;
+    }
     const textforupdate = document.querySelector("#textupdate");
 
     const confirmer = confirm("Voulez-vous continuer?")
     if (confirmer == true) {
+if(inputdelete == ""){
+    alert("Veuillez entrer un identifiant")
+}else {
+    const rawResponse = await fetch('https://kuz.iotalink.fr/catalogue/produit/' + inputdelete, {
+        method: 'DELETE',
+        headers: {
+            'Authorization': 'Bearer ' + jwt
+        },
+    });
+    const data = await rawResponse.json()
 
-        const rawResponse = await fetch('https://kuz.iotalink.fr/catalogue/produit/' + inputdelete, {
-            method: 'DELETE',
-            headers: {
-                'Authorization': 'Bearer ' + jwt
-            },
-        });
-        const data = await rawResponse.json();
+    reupdate()
 
-        setTimeout(reupdate, 700);
+    //console.log(data);
 
-        //console.log(data);
+    textforupdate.innerHTML = `Action: ${data.action} ; Delete ${data.result._id}`;
+}
 
-        textforupdate.innerHTML = `Action: ${data.action} ; Delete ${data.result._id}`;
-
-    } else {
 
     }
+
 }
+
+
 
 function reupdate() {
     console.log("reupdate")
-    get(localStorage.getItem('jwt'))
+    setTimeout(() => {
+        get(localStorage.getItem('jwt'))
+    }, 1000);
 }
 
 
-function update(jwt) {
-
-    const element = document.getElementById("inputupdate").value;
-    const prixinput = document.getElementById("inputprix").value;
-    const textforupdate = document.querySelector("#textupdate");
+function update(jwt,nb) {
+    var element = document.getElementById("inputupdate").value;
+    var prixinput = document.getElementById("inputprix").value;
+var categorie = $('#categ-select :selected').text();
+     if(nb == 1) {
+         element = document.getElementById("inputupdatebox").value;
+         prixinput = document.getElementById("inputprixbox").value;
+         categorie = $('#categ-selectbox :selected').text();
+    }
 
     const requestOptions = {
         method: 'PUT',
@@ -208,7 +223,7 @@ function update(jwt) {
             'Content-Type': 'application/json',
             'Authorization': 'Bearer ' + jwt
         },
-        body: JSON.stringify({ "categorie": `${$('#categ-select :selected').text()}`, "name": `${element}`, "price": `${prixinput}` }),
+        body: JSON.stringify({ "categorie": `${categorie}`, "name": `${element}`, "price": `${prixinput}` }),
     };
 
     fetch(`https://kuz.iotalink.fr/catalogue/produit/${element}/_update`, requestOptions)
@@ -225,17 +240,12 @@ function update(jwt) {
 
             setTimeout(reupdate, 700);
 
-            textforupdate.innerHTML = `Action: ${data.action} Modif de ${data.result._id}`;
             document.getElementById("inputupdate").value = "";
             document.getElementById("inputprix").value = "";
             console.log(data)
 
 
         })
-        .catch(error => {
-            textforupdate.innerHTML = `Error: ${error}`;
-            console.error('There was an error!', error);
-        });
 
 }
 
@@ -278,14 +288,15 @@ async function get(jwt) {
             console.log(result)
             var count = Object.keys(result.result.hits).length;
 
-            
-
             for (i = 0; i < count; i++) {
 
+                if (result.result.hits[i]._id == undefined || result.result.hits[i]._id == " ") {
+                    result.result.hits[i]._id = "Produit définie";
+                }
                 if (result.result.hits[i]._source.categorie == undefined) {
                     result.result.hits[i]._source.categorie = "Non définie";
                 }
-                if (result.result.hits[i]._source.price == undefined) {
+                if (result.result.hits[i]._source.price == "NaN" || result.result.hits[i]._source.price == undefined) {
                     result.result.hits[i]._source.price = "Non définie";
                 }
                 if (result.result.hits[i]._source.identifiant == undefined) {
@@ -305,7 +316,7 @@ async function get(jwt) {
                     + "</td>" +
                     "<td>" +
                     result.result.hits[i]._source.identifiant
-                    + `</td> <td><button onclick="updatebtn(${prof})" class="btn btn-primary">Update</button><button onclick="updatebtn(${prof})" class="btn btn-danger">Delete</button> </td>` +
+                    + `</td> <td><button onclick="updatebtn(${prof})" class="btn btn-primary">Update</button><button onclick="deletebtn(${prof})" class="btn btn-danger">Delete</button> </td>` +
                     "</tr>");
 
                 $("#profil").html(prof);
@@ -319,8 +330,65 @@ async function get(jwt) {
 }
 
 function updatebtn(prof){
+    var rows =document.getElementsByTagName("tbody")[0].rows;
 
-    console.log(prof)
+var tbljv = [];
+
+    for(var i=0;i< 4;i++){
+        var td = rows[prof -1].getElementsByTagName("td")[i].innerHTML;
+        console.log(td)
+        tbljv.push(td)
+        }
+        console.log(tbljv)
+
+const htmls = `<div class="card">
+<div class="card-body">
+<div class="input-group flex-nowrap">
+<span class="input-group-text" id="addon-wrapping">Produit</span>
+<input type="text" class="form-control" value="${tbljv[0]}" placeholder="Produit" aria-label="Produit" aria-describedby="addon-wrapping" id="inputupdatebox">
+</div>
+
+
+
+<div class="input-group mb-3">
+<span class="input-group-text" id="inputGroup-sizing-default">Prix</span>
+<input type="text" class="form-control" value="${tbljv[1]}" placeholder="Prix" aria-label="Prix" id="inputprixbox" aria-describedby="inputGroup-sizing-default">
+</div>
+
+
+
+<label for="categ-selectbox">catégorie:</label>
+<select class="form-select" name="categ" id="categ-selectbox">
+  <option value="">--Please choose an option--</option>
+  <option value="écran">écran</option>
+  <option value="console">Console</option>
+</select>
+</div>
+<button onclick="update(localStorage.getItem('jwt'),1)">Update</button>`;
+
+$("#categ-selectbox option[value=écran]").prop("selected", "selected")
+
+
+    new WinBox({
+        title: "Update",
+        html: htmls
+    });
+
+}
+
+function deletebtn(prof){
+    
+
+    var rows =document.getElementsByTagName("tbody")[0].rows;
+
+        var td = rows[prof -1].getElementsByTagName("td")[0].innerText;
+           
+console.log(td)
+ /*
+const htmls = `<button id="btndelte" onclick="Delete(localStorage.getItem('jwt'),${td})">DELETE</button>`;
+*/
+
+Delete(localStorage.getItem('jwt'),td);
 
 }
 

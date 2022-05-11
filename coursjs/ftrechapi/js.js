@@ -139,6 +139,28 @@ function makeid(length) {
     return result;
 }
 
+async function createboucle(jwt){
+    const elemente = document.getElementById("inputcreate").value;
+    const inputcreateprix = document.getElementById("inputcreateprix").value;
+    const identifiantinput = makeid(8);
+    const textforupdate = document.querySelector("#textupdate");
+
+    for(var i = 0; i <= 5; i++){
+    const rawResponse = await fetch(`https://kuz.iotalink.fr/catalogue/produit/${makeid(8)}/_create`, {
+        method: 'POST',
+        headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json',
+            'Authorization': 'Bearer ' + jwt
+        },
+        body: JSON.stringify({ "categorie": `${$('#categ-create :selected').text()}`, "name": `${makeid(8)}`, "price": `${Number(inputcreateprix)}` })
+    });
+    const data = await rawResponse.json();
+
+    console.log(data);
+    }
+}
+
 async function create(jwt) {
     const elemente = document.getElementById("inputcreate").value;
     const inputcreateprix = document.getElementById("inputcreateprix").value;
@@ -248,7 +270,6 @@ var categorie = $('#categ-select :selected').text();
         })
 
 }
-
 
 
 
